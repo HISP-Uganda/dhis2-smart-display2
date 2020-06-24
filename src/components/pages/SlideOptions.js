@@ -39,7 +39,7 @@ export const SlideOptions = observer(() => {
       <div className="flex flex-col w-full md:w-1/2 pr-6 mb-10">
         <div className="-ml-6 mb-2 pr-2 text-blue-500"><Info className="text-gray-500"/>Description:</div>
         <TextArea value={currentPresentation.description} placeholder="Presentation description"
-                  onChange={currentPresentation.onDescriptionChange} className="w-full pl-12" rows={3}/>
+                  onChange={currentPresentation.onDescriptionChange} className="w-full pl-12" rows={3}/> 
       </div>
       <div className="flex flex-col w-full md:w-1/2 pl-6 mb-10 ">
         <div className="-ml-6  mb-2 pr-2 text-blue-500"><GroupAdd className="text-gray-500"/>Restrict Access to this

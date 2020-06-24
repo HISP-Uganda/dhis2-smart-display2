@@ -155,7 +155,7 @@ export const DashboardItems = observer(() => {
         <div className="w-full md:w-1/4 bg-gray p-4 overflow-y-auto h-88">
           {currentPresentation.dashboards.map(
             dashboard => (
-              <a
+                 <a
                 key={dashboard.id}
                 href="#"
                 onClick={() =>
