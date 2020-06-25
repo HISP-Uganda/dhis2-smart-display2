@@ -25,9 +25,6 @@ export const Visualization = observer(({item, height, width, style = {}}) => {
     item.load({baseUrl});
   });
   return (
-    <div style = {{height:height-40, display:"flex"}}>
-      <div id={item.getItemId} style={{...style, width:calculatedWidth, height:height-40, background:'yellow'}}/>
-      <div onClick = {changeInterepretation} style = {{width:interpretationWidth}}><DoubleLeftOutlined /></div>
-    </div>
-    )
+    <div id={item.getItemId} style={{...style, width, height, background:'yellow'}}/>
+  )
 });
