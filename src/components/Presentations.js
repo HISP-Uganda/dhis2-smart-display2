@@ -13,6 +13,7 @@ import {Input} from "antd";
 
 const {Search} = Input;
 
+
 const styleLeft = {
   margin: 0,
   top: 'auto',
@@ -36,13 +37,13 @@ const style = {
     height: 40,
     align: 'center',
     color: '#9d9d9d',
+    
   },
 
   viewIcon2:{
     width: 40,
     height: 40,
-    align: 'center',
-    color: '#5dbcd2 ',
+    color: '#43a7ee',
   },
   largeIcon: {
     width: 100,
@@ -55,11 +56,13 @@ const style = {
   },
 };
 
-
 export const Presentations = observer(() => {
   const store = useMst();
   const [mode, setMode] = useState('list');
   const [selected, setSelected] = useState(true);
+  const [listClass, setListClass] = useState(style.viewIcon2);
+  const [singleClass, setSingleClass] = useState(style.viewIcon);
+  const [gridClass, setGridClass] = useState(style.viewIcon);
 
 
   const showPage = () => {
@@ -76,16 +79,40 @@ export const Presentations = observer(() => {
   }
 
   
-  const changeMode = (mode) => () => setMode(mode);
+  const changeMode = (mode) => () =>{ 
+    switch (mode) {
+      case 'list':
+        setListClass(style.viewIcon2)
+        setSingleClass(style.viewIcon)
+        setGridClass(style.viewIcon)
+        break;
+      case 'grid':
+        setListClass(style.viewIcon)
+        setSingleClass(style.viewIcon)
+        setGridClass(style.viewIcon2)
+        break;
+      case 'single':
+        setListClass(style.viewIcon)
+        setSingleClass(style.viewIcon2)
+        setGridClass(style.viewIcon)
+        break;
+      default:
+        setListClass(style.viewIcon2)
+        setSingleClass(style.viewIcon)
+        setGridClass(style.viewIcon)
+        break;
+    }
+    setMode(mode);}
+
   return (
     <div className="h-auto mt-4">
       <div className="flex px-16 py-4">
         <div className="flex">
           <h1 className="text-base font-bold px-1">
             View as 
-            <List  style={selected==true?style.viewIcon2:style.viewIcon} onClick={changeMode('list') } />
-            <CheckBoxOutlineBlankOutlined style={selected==true?style.viewIcon2:style.viewIcon} onClick={changeMode('single') }/>
-            <GridOn style={selected==true?style.viewIcon2:style.viewIcon}  onClick={changeMode('grid')}/> 
+            <List                         style={listClass} onClick={changeMode('list') } />
+            <CheckBoxOutlineBlankOutlined style={singleClass} onClick={changeMode('single')}/>
+            <GridOn                       style={gridClass}  onClick={changeMode('grid')}/> 
           </h1>
           
         </div>

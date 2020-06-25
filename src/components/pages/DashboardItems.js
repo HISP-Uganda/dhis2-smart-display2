@@ -152,24 +152,24 @@ export const DashboardItems = observer(() => {
   return (
     <div className="h-auto px-4">
       <div className="flex md:flex-row flex-wrap h-full">
-        <div className="w-full md:w-1/4 bg-gray p-4 ">
+        <div className="w-full md:w-1/4 bg-gray p-4 overflow-y-auto h-88">
           {currentPresentation.dashboards.map(
             dashboard => (
-              <a
+                 <a
                 key={dashboard.id}
                 href="#"
                 onClick={() =>
                   setCurrentDashboard(dashboard)
                 }
                 className="block group p-4 border-b bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white">
-                <p className="text-base mb-1 text-blue group-hover:text-white">
+                <p className="text-base mb-1 text-blue group-hover:text-white ">
                   {dashboard.name}
                 </p>
               </a>
             )
           )}
         </div>
-        <div className="w-auto md:w-3/4 p-4 pt-10 h-56">
+        <div className="w-auto md:w-3/4 p-4 h-56">
           <div className="w-auto p-4  bg-blue-500 text-white text-lg">
             <ViewQuiltIcon style={iconStyles.AddIcon} className="float-left pr-4"/>{currentDashboard.name}
             <MoreVertIcon className="float-right"
