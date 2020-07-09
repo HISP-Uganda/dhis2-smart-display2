@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
 import {useConfig} from '@dhis2/app-runtime';
-import { DoubleLeftOutlined } from '@ant-design/icons';
+//import { DoubleLeftOutlined } from '@ant-design/icons';
 
 export const Visualization = observer(({item, height, width, style = {}}) => {
   const {baseUrl} = useConfig();
   const [interpretation, setInterpretation] =  useState(false);
-  const [calculatedWidth, setCalculatedWidth] = useState(width);
+  // const [calculatedWidth, setCalculatedWidth] = useState(width);
   const [interpretationWidth, setInterpretationWidth] = useState (100);
   const changeInterepretation = () =>{
     setInterpretation (!interpretation);
@@ -25,9 +25,6 @@ export const Visualization = observer(({item, height, width, style = {}}) => {
     item.load({baseUrl});
   });
   return (
-    <div style = {{height:height-40, display:"flex"}}>
-      <div id={item.getItemId} style={{...style, width:calculatedWidth, height:height-40}}/>
-      <div onClick = {changeInterepretation} style = {{width:interpretationWidth}}><DoubleLeftOutlined /></div>
-    </div>
+      <div id={item.getItemId} style={{...style, width:width, height:height}}/>
     )
 });

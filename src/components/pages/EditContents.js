@@ -28,10 +28,10 @@ export const EditContents = observer(() => {
           </div>)}
         </div>
         <div className="w-full md:w-3/4 bg-red pl-4">
-          <div className=" w-full h-48">
-            <Card>
+          <div>
+            <Card className="h-88">
               <CardContent>
-                <p>Map or Chart</p>
+                <p></p>
               </CardContent>
             </Card>
           </div>

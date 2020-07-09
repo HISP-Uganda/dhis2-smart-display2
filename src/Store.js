@@ -246,6 +246,14 @@ export class Store {
       .includes(String(this.presentationFilter).toLowerCase()));
   }
 
+get isValid(){
+  if (this.currentPresentation.dashboards.length > 0 ){
+    return true;
+
+  }
+  return false;
+}
+
 }
 
 decorate(Store, {
@@ -285,5 +293,6 @@ decorate(Store, {
   setPresentationFilter: action,
   deletePresentation: action,
 
-  currentPresentations: computed
+  currentPresentations: computed,
+  isValid: computed
 });
