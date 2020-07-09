@@ -7,7 +7,7 @@
   "scripts": {
     "build:css": "tailwindcss build src/styles/index.css -o src/styles/tailwind.css",
     "build": "d2-app-scripts build",
-    "start": "npm run build:css && d2-app-scripts start",
+    "start": "npm run build:css && d2-app-scripts start ",
     "test": "d2-app-scripts test"
   },
   "devDependencies": {
@@ -31,6 +31,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.42",
     "@material-ui/pickers": "^3.2.10",
+    "abort-controller": "^3.0.0",
     "add": "^2.0.6",
     "antd": "^4.0.3",
     "autoprefixer": "^9.7.4",
@@ -44,8 +45,10 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "mobx-state-tree": "^3.15.0",
+    "polyfill": "^0.1.0",
     "postcss-cli": "^7.1.0",
     "react-full-screen": "^0.2.4",
+    "react-hook-form": "^5.7.2",
     "react-icons": "^3.9.0",
     "react-numeric-input": "^2.2.3",
     "react-recipes": "^1.0.0",

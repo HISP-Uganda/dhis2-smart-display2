@@ -4,7 +4,8 @@ import {DHIS2Visualization} from '../DHIS2Visualization';
 import {
   VISUALIZATION,
   CHART,
-  REPORT_TABLE
+  REPORT_TABLE,
+  TEXT
 } from '../../modules/ItemTypes'
 
 export const VisualizationItem = ({item, height, width, style}) => {
@@ -14,6 +15,8 @@ export const VisualizationItem = ({item, height, width, style}) => {
     case CHART:
     case REPORT_TABLE:
       return <DHIS2Visualization width={width} height={height} item={item.dashboardItemContent} style={style}/>
+  //case TEXT:
+  //  return <div>{JSON.stringify(item, null, 2)}</div>
     default:
       return <Visualization width={width} height={height} item={item.dashboardItemContent} style={style}/>
   }
