@@ -119,3 +119,16 @@ table.pivot * {
   user-select: none !important;
 }
 
+
+.slide-show{
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+table {
+  width: 99%;
+  height: 98%;
+  margin: auto;
+  margin-top: 10px;
+  text-align: center;
+}

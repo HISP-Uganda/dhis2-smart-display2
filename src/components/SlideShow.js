@@ -1,17 +1,13 @@
-import React, {useCallback, useState, useEffect} from 'react';
-import {observer} from 'mobx-react';
-import useFullscreenStatus, {useMst, useWindowDimensions} from '../context/context';
+import { observer } from 'mobx-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Deck, Slide } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
-import {Deck, Slide,Text} from 'spectacle';
-import {VisualizationItem} from "./pages/VisualizationItem";
-import Fab from "@material-ui/core/Fab";
-import HomeIcon from "@material-ui/icons/Home";
-import FullScreenIcon from "@material-ui/icons/Fullscreen";
-import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
+import useFullscreenStatus, { useMst } from '../context/context';
+import { VisualizationItem } from "./pages/VisualizationItem";
 
 const theme = createTheme(
   {
-    primary: 'white',
+    primary: 'none',
     secondary: '#000000',
     textColor: '#327dcc',
   },
@@ -26,9 +22,8 @@ const slideTheme = {
 export const SlideShow = observer(() => {
   const store = useMst();
   const maximizableElement = React.useRef(null);
-  const {height, width} = useWindowDimensions();
   let isFullscreen, setIsFullscreen;
-  let errorMessage;
+  const [height, setHeight] = useState(window.outerHeight)
   try {
     [isFullscreen, setIsFullscreen] = useFullscreenStatus(maximizableElement);
   } catch (e) {
@@ -36,90 +31,60 @@ export const SlideShow = observer(() => {
     setIsFullscreen = undefined;
   }
 
-  const handleExitFullscreen = () => document.exitFullscreen();
+  useEffect(() => {
+    if (isFullscreen) {
+      setHeight(window.outerHeight)
+    } else {
+      setHeight(window.innerHeight - 100)
+    }
+  }, [isFullscreen, height])
 
-  return store.currentPresentation.selectedItems.length > 0 ?
-    <div ref={maximizableElement} style={{background: 'red'}}>
-      <Deck
-        transition={store.currentPresentation.transitionModes}
-        transitionDuration={store.currentPresentation.transitionDuration}
-        autoplay={true}
-        autoplayDuration={store.currentPresentation.slideDuration}
-        showFullscreenControl={false}
-        controls={true}
-        progress="none"
-        theme={theme}
-        contentHeight="100vh"
-        contentWidth="100vw"
-        autoplayLoop={true}
-        autoplayOnStart={true}
-        textColor={theme.textColor}
-      >
-        {store.currentPresentation.selectedItems.map(item =>
-          <Slide
-            key={item.id}
-            fit={true}
-            controlColor={slideTheme.controlColor}
-            align="center center"
-            contentStyles={{display: 'flex', flexDirection: 'column', zIndex: 0, textAlign: 'center'}}
-            margin={0}
-            padding={0}
-            
-          >
-            <VisualizationItem item={item} height={height-40} width={width} style={{marginTop: 40}}/>
-            {isFullscreen ? (
-              <Fab
-                size="medium"
-                style={{
-                  margin: 0,
-                  top: 'auto',
-                  left: 10,
-                  bottom: 10,
-                  right: 'auto',
-                  zIndex: 10000,
-                  position: 'fixed',
-                }}
-                color="primary"
-                onClick={handleExitFullscreen}
-              >
-                <FullscreenExitIcon/>
-              </Fab>
-            ) : (
-              <Fab
-                size="medium"
-                style={{
-                  margin: 0,
-                  top: 'auto',
-                  left: 10,
-                  bottom: 10,
-                  right: 'auto',
-                  zIndex: 10000,
-                  position: 'fixed',
-                }}
-                color="primary"
-                onClick={setIsFullscreen}
-              >
-                <FullScreenIcon/>
-              </Fab>
-            )}
+  if (store.currentPresentation.selectedItems.length === 0) {
+    return <div> No slides found</div>
+  }
 
-            <Fab size="medium" color="primary" style={{
-              height: '50px',
-              margin: 0,
-              zIndex: 10000,
-              top: 'auto',
-              right: 10,
-              bottom: 10,
-              left: 'auto',
-              position: 'fixed',
-            }}>
-              <HomeIcon onClick={() => store.setPage('3')}/>
-            </Fab>
-          </Slide>)}
-      </Deck>
-    </div> : <div>
-      No slides found
-    </div>
 
+  return (<div ref={maximizableElement} className="slide-show">
+    <Deck
+      transition={store.currentPresentation.transitionModes}
+      transitionDuration={store.currentPresentation.transitionDuration}
+      autoplay={true}
+      autoplayDuration={store.currentPresentation.slideDuration}
+      showFullscreenControl={false}
+      controls={true}
+      progress="none"
+      theme={theme}
+      contentHeight={`${height}px`}
+      contentWidth="100%"
+      autoplayLoop={true}
+      autoplayOnStart={true}
+      textColor={theme.textColor}
+    >
+      {store.currentPresentation.selectedItems.map(item =>
+        <Slide
+          key={item.id}
+          fit={true}
+          controlColor={slideTheme.controlColor}
+          bgColor={isFullscreen ? 'white' : 'transparent'}
+          contentStyles={{
+            // display: 'flex',
+            // alignContent: 'center',
+            // justifyContent: 'center',
+            // alignItems: 'center',
+            padding: 0,
+            margin: 0,
+            // width: window.outerWidth,
+            // height,
+            // marginTop: 100,
+            overflow: 'auto'
+          }}
+          align="center center"
+        // className="m-0 p-0"
+        // margin={0}
+        // padding={0}
+        >
+          <VisualizationItem item={item} height={height} width={window.outerWidth} showFooter={true} setIsFullscreen={setIsFullscreen} isFullscreen={isFullscreen} />
+        </Slide>)}
+    </Deck>
+  </div>)
 })
-
