@@ -57,6 +57,7 @@
     "react-search-box": "^2.0.2",
     "react-slick": "^0.25.2",
     "react-swipeable-views": "^0.13.9",
+    "react-use-dimensions": "^1.2.1",
     "slick-carousel": "^1.8.1",
     "spectacle": "5.8.0",
     "yarn": "^1.22.4"

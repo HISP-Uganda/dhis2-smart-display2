@@ -1,17 +1,13 @@
-import React, {useCallback, useState, useEffect} from 'react';
-import {observer} from 'mobx-react';
-import useFullscreenStatus, {useMst, useWindowDimensions} from '../context/context';
+import { observer } from 'mobx-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Deck, Slide } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
-import {Deck, Slide, Text} from 'spectacle';
-import {VisualizationItem} from "./pages/VisualizationItem";
-import Fab from "@material-ui/core/Fab";
-import HomeIcon from "@material-ui/icons/Home";
-import FullScreenIcon from "@material-ui/icons/Fullscreen";
-import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
+import useFullscreenStatus, { useMst } from '../context/context';
+import { VisualizationItem } from "./pages/VisualizationItem";
 
 const theme = createTheme(
   {
-    primary: 'white',
+    primary: 'none',
     secondary: '#000000',
     textColor: '#327dcc',
   },
@@ -26,9 +22,8 @@ const slideTheme = {
 export const SlideShow = observer(() => {
   const store = useMst();
   const maximizableElement = React.useRef(null);
-  const {height, width} = useWindowDimensions();
   let isFullscreen, setIsFullscreen;
-  let errorMessage;
+  const [height, setHeight] = useState(window.outerHeight)
   try {
     [isFullscreen, setIsFullscreen] = useFullscreenStatus(maximizableElement);
   } catch (e) {
@@ -36,9 +31,20 @@ export const SlideShow = observer(() => {
     setIsFullscreen = undefined;
   }
 
-  const handleExitFullscreen = () => document.exitFullscreen();
+  useEffect(() => {
+    if (isFullscreen) {
+      setHeight(window.outerHeight)
+    } else {
+      setHeight(window.innerHeight - 100)
+    }
+  }, [isFullscreen, height])
 
-  return store.currentPresentation.selectedItems.length > 0 ?
+  if (store.currentPresentation.selectedItems.length === 0) {
+    return <div> No slides found</div>
+  }
+
+
+  return (<div ref={maximizableElement} className="slide-show">
     <Deck
       transition={store.currentPresentation.transitionModes}
       transitionDuration={store.currentPresentation.transitionDuration}
@@ -48,8 +54,8 @@ export const SlideShow = observer(() => {
       controls={true}
       progress="none"
       theme={theme}
-      contentHeight="98vh"
-      contentWidth="98vw"
+      contentHeight={`${height}px`}
+      contentWidth="100%"
       autoplayLoop={true}
       autoplayOnStart={true}
       textColor={theme.textColor}
@@ -59,22 +65,26 @@ export const SlideShow = observer(() => {
           key={item.id}
           fit={true}
           controlColor={slideTheme.controlColor}
+          bgColor={isFullscreen ? 'white' : 'transparent'}
           contentStyles={{
-            display: 'flex',
-            flexDirection: 'column',
-            textAlign: 'center',
-            alignContent: 'center',
-            alignItems: 'center'
+            // display: 'flex',
+            // alignContent: 'center',
+            // justifyContent: 'center',
+            // alignItems: 'center',
+            padding: 0,
+            margin: 0,
+            // width: window.outerWidth,
+            // height,
+            // marginTop: 100,
+            overflow: 'auto'
           }}
-          margin={0}
-          padding={0}
+          align="center center"
+        // className="m-0 p-0"
+        // margin={0}
+        // padding={0}
         >
-          <VisualizationItem item={item} height={'70vh'} width={'70vw'}/>
-        </Slide>
-      )}
-    </Deck> : <div>
-      No slides found
-    </div>
-
+          <VisualizationItem item={item} height={height} width={window.outerWidth} showFooter={true} setIsFullscreen={setIsFullscreen} isFullscreen={isFullscreen} />
+        </Slide>)}
+    </Deck>
+  </div>)
 })
-
