@@ -35,7 +35,7 @@ export const DHIS2Visualization = observer(({ item, height, width, showFooter = 
         style={{ ...style, width, height: showFooter ? height - 60 : height, display: 'flex', justifyContent: 'center', textAlign: 'center', alignItems: 'center' }}
       />}
     </div>
-    {showFooter ? <div style={{ height: 60 }} className="flex items-center">
+    {showFooter ? <div style={{ height: 60 }} className="flex items-center bg-gray-300">
       <div className="pl-2 text-left">
         {isFullscreen ? (
           <Fab
@@ -55,7 +55,7 @@ export const DHIS2Visualization = observer(({ item, height, width, showFooter = 
             </Fab>
           )}
       </div>
-      <div className="text-5xl flex-1 pb-2">{item.name}</div>
+      <div className="text-5xl flex-1 pb-2 flex justify-center items-center content-center">{item.name}</div>
       <div className="pr-2 text-right"><Fab size="medium" color="primary">
         <HomeIcon onClick={() => store.setPage('3')} />
       </Fab></div>

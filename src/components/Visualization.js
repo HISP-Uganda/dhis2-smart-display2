@@ -17,7 +17,7 @@ export const Visualization = observer(({ item, height, width, showFooter = false
   });
   return (<div className="flex flex-col">
     <div id={item.getItemId} style={{ ...style, width: width, height: showFooter ? height - 60 : height }} />
-    {showFooter ? <div style={{ height: 60 }} className="flex items-center">
+    {showFooter ? <div style={{ height: 60 }} className="flex items-center bg-gray-300">
       <div className="pl-2 text-left">
         {isFullscreen ? (
           <Fab
