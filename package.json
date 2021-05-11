@@ -38,7 +38,7 @@
     "d2": "^31.8.1",
     "date-fns": "^2.10.0",
     "hookrouter": "^1.2.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "material-auto-rotating-carousel": "^3.0.2",
     "material-table": "^1.57.2",
     "material-ui-search-bar": "^0.4.2",
